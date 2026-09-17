@@ -1,0 +1,30 @@
+1. Make the repo in GitHub first
+
+
+ git remote add origin git@github.com:your-username/your-repo.git
+
+2. When working as a team on a project, it is important that everyone stays up to date.
+
+Any time you start working on a project, you should get the most recent changes to your local copy.
+
+With Git, you can do that with pull.
+
+a. Git Fetch downloads new data from a remote repo, dut does not change your working files or branches. It lets you see what others have pushed before you merge or pull, to check the changes use git status and git log origin. We can then merge the changes onto our pc with git merge. Use Git pull for all changes
+
+3. When we have made changes locally, we want to update our remote repository with the changes.
+
+	Basic Push: This command pushes your current branch to the remote repository named origin
+			git push -u origin. Have to stage and commit your changes first
+			git push --tags
+
+4. Branches work similarly as in the git CLI. create a branch with git branch and switch to the branch with git checkout. for it to Reflect on GitHub, you have git push origin <branch name>. to delete, delete locally as usual with git branch -d and then on GitHub git push origin --delete test. To pull a branch do git checkout origin then git checkout.
+
+5. General good GitHub workflow:
+Create a Branch: Start new work without affecting the main code.
+Make Commits: Save progress as you make changes.
+Open a Pull Request: Ask others to review your work.
+Review: Discuss and improve the changes together.
+Deploy: Test your changes before merging.
+Merge: Add your finished work to the main branch.
+
+6. To bring to a new device:  git clone https://github.com/Raeed-Ahmed-Audri/burn-sensing-scripts.git
