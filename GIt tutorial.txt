@@ -1,0 +1,66 @@
+1. GGit add -A or git add <file> to stage files. git status to check.
+
+2. It records a snapshot of your files at a certain time, with a message describing what changed. You can always go back to a previous commit if you need to. Here are some key commands for commits:
+git commit -m "message" - Commit staged changes with a message. git commit -a -m "message" stages and commits files
+
+3. ls shows whats in the repo
+
+4. Sometimes you need to quickly switch tasks or fix a bug, but you're not ready to commit your work. git stash lets you save your uncommitted changes and return to a clean working directory. always do git stash -u
+
+5.In Git, a branch is like a separate workspace where you can make changes and try new ideas without affecting the main project. 
+  Git Branch "Branch" --> Git checkout Branch. Git branch gives us list of branches. If we edit in branch stage then commit, the master branch will be different from the new branch we are working on, allowing us to test whatever. delete branch with git branch -d branchname. 
+
+Best Practices:
+
+Use clear, descriptive branch names (like feature/login-page or bugfix/header-crash).
+Keep each branch focused on a single purpose or feature.
+Regularly merge changes from the main branch to keep your branch up-to-date.
+Delete branches that are no longer needed to keep your repository clean.
+
+
+6. Git Merge means to combine the changes from one branch to another. Usually you switch into the branch you want to merge into (usually main or master). git merge master BranchName.
+
+Best Practice for Merging Branches:
+Always commit or stash your changes before starting a merge.
+Regularly merge from the main branch into your feature branch to minimize conflicts.
+Read and resolve conflicts carefully-don't just accept all changes blindly.
+Write clear and descriptive merge commit messages
+
+7. Best Practices 
+
+**Commits**
+- Commit early, commit often — small logical units, not end-of-day dumps.
+- Write messages in imperative present tense: "Fix off-by-one in gamma calc," not "Fixed" or "Fixing."
+- One logical change per commit. Don't mix a bug fix with an unrelated feature.
+- Never commit broken/non-running code to your main branch.
+- Don't commit generated files, build artifacts, or secrets (API keys, credentials) — use `.gitignore`.
+
+**Branching**
+- Keep `main`/`master` always in a working state.
+- Use feature branches for anything non-trivial (`feature/burn-model`, `fix/loader-bug`).
+- Delete branches after merging to avoid clutter.
+- Name branches descriptively, not `test`, `temp`, `asdf`.
+
+**Merging**
+- Test before merging into main — run whatever validation you have.
+- Prefer small, frequent merges over giant branches that live for weeks and diverge heavily (merge conflict risk grows with divergence time).
+- In a team: use pull/merge requests even if solo-reviewed, so there's a record of what changed and why.
+
+**Remote hygiene**
+- Push regularly — your remote is your backup, not just a collaboration tool.
+- Pull before you start work, especially on a shared repo, to avoid conflicts.
+- Never force-push (`git push --force`) to a shared branch unless you fully understand what it overwrites — it rewrites history others may depend on.
+
+**History and safety**
+- Don't rewrite public/shared history (`rebase`, `amend`) once others have pulled it.
+- Use `.gitignore` from the start — retrofitting it after big binaries are already committed is painful (they stay in history even after removal).
+- Tag meaningful points (releases, thesis submissions, milestone states) so you can always return to a known-good snapshot.
+
+**General discipline**
+- Read `git status` before and after most operations — it tells you exactly what state you're in.
+- Understand the difference between working directory, staging area, and commit history before doing anything destructive.
+- When unsure what an operation does, check `git status` or do a dry run before committing to it — some git commands (checkout, reset --hard, clean) destroy uncommitted work with no undo.
+
+8. Always pull before you push
+
+matlab -sd to open matlab
