@@ -96,4 +96,7 @@ title("Voltage Probe 1,1,1,1")
 xlabel("Frequency (GHz)")
 ylabel("abs dB")
 
-
+%% .s2p files for two port device
+s2p = sparameters ("yourfile.s2p");
+rfplot(s2p,1,1); %Plot S11
+rfplot(s2p,2,1); %Plot S22
