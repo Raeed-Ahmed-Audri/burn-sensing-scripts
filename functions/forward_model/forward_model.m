@@ -73,10 +73,25 @@ layers(5).d = [];
 N = numel(layers);
 M = numel(f);
 
-for k = N:2
-   if k = N
-       layers(k).input_impedance = 
-       
+Zin = zeros(N,M); %N is whatever value, M is frequencies
+gamma = zeros(N,M);
+epsilon = zeros(N,M);
 
+intrinsic_impedance = 377;
 
+[epsilon_bone, ~, ~] = fwrd_model_values(layers(5).filepath,f);
+Zin(N, : ) = intrinsic_impedance ./sqrt(epsilon_bone);
+
+% Recursion: work backward up to layer 2 (skin)
+for k =
+    https://www.mathworks.com/matlabcentral/answers/55154-decrementing-for-loop-in-matlab
 end
+
+
+%Work on reflection coefficients next
+
+
+% for k = N:2
+% 
+% 
+% end
