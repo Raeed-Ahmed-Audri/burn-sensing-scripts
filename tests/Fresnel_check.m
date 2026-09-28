@@ -39,10 +39,8 @@ function [interpolated_complex_value, Z0_material, gamma_epsilon_material] = fwr
 
 end
 
-%% FWRD Model Continoued 
-Total_points = 3;
-Step_Value = (9-2)/(Total_points-1);
-f = [2:Step_Value:9]*10^9;
+%% Fresnel Test
+f = 3*10^9;
 intrinsic_impedance = 377;
 
 layers(1).filepath = [];
@@ -50,18 +48,7 @@ layers(1).eps = 1;
 layers(1).d = [];
 
 layers(2).filepath = "Skin_edit.txt";
-layers(2).d = 0.002;
-
-layers(3).filepath = "Skin_edit.txt";
-layers(3).d = 0.005;
-
-layers(4).filepath = "Skin_edit.txt";
-layers(4).d = 0.010;
-
-layers(5).filepath = "Skin_edit.txt";
-layers(5).d = [];
-
-%Add more layers as needed
+layers(2).d = [];
 
 N = numel(layers);
 M = numel(f);
@@ -74,8 +61,8 @@ epsilon = zeros(N,M);
 Zair = intrinsic_impedance;
 Z0(1,:) = Zair;
 
-[epsilon_bone, ~, ~] = fwrd_model_values(layers(5).filepath,f);
-Zin(N, : ) = intrinsic_impedance ./sqrt(epsilon_bone);
+[epsilon_skin, ~, ~] = fwrd_model_values(layers(2).filepath,f);
+Zin(N, : ) = intrinsic_impedance ./sqrt(epsilon_skin);
 Z0(N,:) = Zin(N,:);
 
 %Find Characteristic Impedances
