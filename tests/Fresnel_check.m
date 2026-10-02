@@ -79,3 +79,4 @@ for k =N-1:-1:2
 end
 
 gamma_th = (Zin(2,:)-Zair)./(Zin(2,:)+Zair);
+20*log10(abs(gamma_th))
