@@ -1,10 +1,10 @@
 %% Difference Function
 % Read Files
-reference_file = readtable("o1,1.txt"); %Left Empty for now
-difference_file = readtable("o1,1.txt"); %Left Empty for same reason above
+reference_file = readtable("MetalPlate.txt"); %Left Empty for now
+target_file = readtable("FullStack.txt"); %Left Empty for same reason above
 
 t_ref = reference_file{:,1}*10^-9;   y_ref = reference_file{:,2};
-t_tgt = difference_file{:,1}*10^-9;  y_tgt = difference_file{:,2};
+t_tgt = target_file{:,1}*10^-9;  y_tgt = target_file{:,2};
 
 %Valid Data check
 assert(issorted(t_ref, "strictascend"), "Time is not Inreasing for the Reference Trace");
@@ -53,7 +53,22 @@ t_end = min (t_ref(end), t_tgt(end));
 
 dt = min(median_Ref_trace, median_tgt_trace);
 N = round((t_end - t_start) / dt) + 1;
-t_common = linspace(t_start, t_end, N);
+t_common_rows = linspace(t_start, t_end, N);
+t_common = t_common_rows';
+
+%Resampling both traces onto t_common
+y_ref_resampled = pchip(t_ref, y_ref, t_common);
+y_tgt_resampled = pchip(t_tgt, y_tgt, t_common);
+
+%Estimate the lag
+plot(t_common,y_ref_resampled, t_common, y_tgt_resampled)
+t_common_mask = (t_common>=1.17e-9 ) & (t_common<= 2.04e-9);
+y_ref_mask = y_ref_resampled(t_common_mask);
+y_tgt_mask = y_tgt_resampled(t_common_mask);
+
+r = xcorr(y_ref_mask,y_tgt_mask);   
+
+
 
 
 %% Envelope Extraction Via Hilbert Transform
