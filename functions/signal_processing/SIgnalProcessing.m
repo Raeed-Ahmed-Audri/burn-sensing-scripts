@@ -1,6 +1,6 @@
 %% Difference Function
 % Read Files
-reference_file = readtable("MetalPlate.txt"); %Left Empty for now
+reference_file = readtable("MetalPlate_Apperature.txt"); %Left Empty for now
 target_file = readtable("FullStack.txt"); %Left Empty for same reason above
 
 t_ref = reference_file{:,1}*10^-9;   y_ref = reference_file{:,2};
@@ -61,14 +61,31 @@ y_ref_resampled = pchip(t_ref, y_ref, t_common);
 y_tgt_resampled = pchip(t_tgt, y_tgt, t_common);
 
 %Estimate the lag
-plot(t_common,y_ref_resampled, t_common, y_tgt_resampled)
+%plot(t_common,y_ref_resampled, t_common, y_tgt_resampled)
 t_common_mask = (t_common>=1.17e-9 ) & (t_common<= 2.04e-9);
 y_ref_mask = y_ref_resampled(t_common_mask);
 y_tgt_mask = y_tgt_resampled(t_common_mask);
 
-r = xcorr(y_ref_mask,y_tgt_mask);   
+[r, lags] = xcorr(y_ref_mask,y_tgt_mask,24);   
+[maxVal, idx] = max(r); %Max Value and Index Position
 
+if idx > 1 && idx < length(r)
+    y_minus = r(idx - 1);
+    y_zero  = r(idx);
+    y_plus  = r(idx + 1);
+    
+    % Parabolic interpolation offset (-0.5 <= delta <= 0.5)
+    delta = 0.5 * (y_minus - y_plus) / (y_minus - 2*y_zero + y_plus);
+    
+    % Refined lag and interpolated peak amplitude
+    refined_lag = lags(idx) + delta;
+else
+    refined_lag = lags(idx);
+end
+lag_ps = refined_lag*dt*10^12 ;
 
+%Evaluate the target at shifted times
+y_target_shifted
 
 
 %% Envelope Extraction Via Hilbert Transform
